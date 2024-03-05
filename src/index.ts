@@ -1,8 +1,8 @@
 import { readFileSync } from "fs";
 
 function getStatistics(): number{
-  const persons = JSON.parse(readFileSync("./persons.json").toString());
-  return persons.length;
+  const persons: number = JSON.parse(readFileSync("./persons.json").toString());
+  return persons;
 }
 
 function displayResult() {
