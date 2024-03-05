@@ -1,18 +1,28 @@
 import { readFileSync } from "fs";
 
-function getStatistics(): number {
+function getStatistics(): { meanAge: number, meanHeight: number } {
   const persons: any[] = JSON.parse(readFileSync("./persons.json").toString());
-  let maxAge = 0;
+
+  let totalAge: number = 0;
+  let totalHeight: number = 0;
+
   for (const person of persons) {
-    if (person.age > maxAge) {
-      maxAge = person.age;
-    }
+    totalAge += person.age;
+    totalHeight += person.height;
   }
-  return maxAge;
+
+  const meanAge: number = totalAge / persons.length;
+  const meanHeight: number = totalHeight / persons.length;
+
+  return {
+    meanAge,
+    meanHeight,
+  };
 }
 
-const ageMax = getStatistics();
-console.log("L'âge maximal est de", ageMax);
+const stats = getStatistics();
+console.log("L'âge moyen est de", stats.meanAge);
+console.log("La taille moyenne est de", stats.meanHeight);
 
 function displayResult() {
   console.log(getStatistics());
