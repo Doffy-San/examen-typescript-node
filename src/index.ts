@@ -1,10 +1,15 @@
 import { readFileSync } from "fs";
 
-function getStatistics(): { meanAge: number, meanHeight: number } {
+function getStatistics(): { meanAge: number, meanHeight: number|string } {
   const persons: Array<{ age: number, taille: number }> = JSON.parse(readFileSync("./persons.json").toString());
 
   let totalAge: number = 0;
   let totalHeight: number = 0;
+
+  // Vérifier si le premier élément possède les propriétés "age" et "taille"
+  if (!Object.hasOwn(persons[0], "age") || !Object.hasOwn(persons[0], "taille")) {
+    return { meanAge: NaN, meanHeight: "Données incorrectes" };
+  }
 
   for (const person of persons) {
     totalAge += person.age;
